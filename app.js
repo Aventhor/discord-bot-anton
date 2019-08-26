@@ -9,7 +9,7 @@ logger.add(new logger.transports.Console, {
 
 logger.level = 'debug';
 var bot = new Discord.Client({
-    token: process.env.TOKEN,
+    token: 'NTc1NzQyNzg0MDk1NTE4NzIz.XWOYqQ.NAimlNLSBXJDxuwOQE2yGHiCqhI',
     autorun: true
 });
 bot.on('ready', function (evt) {
@@ -104,15 +104,26 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     }
     if (bot.directMessages[channelID]) {
         if (message.substring(0, 2) == '!r') {
-            var args = message.substring(1).split(' ');
-            var cmd = args[1];
+            var args = message.substring(0).split('!r');
+            var msg = args[1];
 
-            args = args.splice(1);
-            // bot.sendMessage({
-            //     to: "581451144077770754",
-            //     message: `${message}`,
-            // });
-            console.log(cmd)
+            args = args.splice(0, 1);
+            if (cmd != undefined || msg.length !== 0) {
+                bot.sendMessage({
+                    to: "581451144077770754",
+                    message: `${msg}`,
+                });
+                console.log(msg)
+                bot.sendMessage({
+                    to: userID,
+                    message: '',
+                    embed: {
+                        color: 6826080,
+                        title: 'Сообщение отправлено!',
+                        description: `${msg}`
+                    }
+                })
+            }
         }
     }
 });
