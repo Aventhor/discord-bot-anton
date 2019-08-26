@@ -16,10 +16,10 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
-    bot.sendMessage({
-        to: "581451144077770754",
-        message: "📣 Гусь Антон на месте! Пляшем вместе!",
-    });
+    // bot.sendMessage({
+    //     to: "581451144077770754",
+    //     message: "📣 Гусь Антон на месте! Пляшем вместе!",
+    // });
     bot.setPresence({ game: { name: "!ga help", type: 3 } });
 });
 
@@ -108,10 +108,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             var cmd = args[1];
 
             args = args.splice(1);
-            bot.sendMessage({
-                to: "581451144077770754",
-                message: `${message}`,
-            });
+            // bot.sendMessage({
+            //     to: "581451144077770754",
+            //     message: `${message}`,
+            // });
+            console.log(cmd)
         }
     }
 });
