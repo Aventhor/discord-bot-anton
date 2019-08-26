@@ -1,4 +1,4 @@
-// import { getInfo } from 'sysinfo.js';
+var sys = require('./sysinfo')
 var Discord = require('discord.io');
 var logger = require('winston');
 
@@ -16,10 +16,10 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
-    bot.sendMessage({
-        to: "581451144077770754",
-        message: "📣 Гусь Антон на месте! Пляшем вместе!",
-    });
+    // bot.sendMessage({
+    //     to: "581451144077770754",
+    //     message: "📣 Гусь Антон на месте! Пляшем вместе!",
+    // });
     bot.setPresence({ game: { name: "!ga help", type: 3 } });
 });
 
@@ -103,27 +103,45 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         }
     }
     if (bot.directMessages[channelID]) {
+        if (message === '!s') {
+            sys.getInfo();
+        }
+
         if (message.substring(0, 2) == '!r') {
-            var args = message.substring(0).split('!r');
+            var args = message.substring(0).split('!r ');
             var msg = args[1];
 
             args = args.splice(0, 1);
             if (cmd != undefined || msg.length !== 0) {
-                bot.sendMessage({
-                    to: "581451144077770754",
-                    message: `${msg}`,
-                });
-                logger.info(user + ` used !r with msg = ${msg}`);
-                bot.sendMessage({
-                    to: userID,
-                    message: '',
-                    embed: {
-                        color: 6826080,
-                        title: 'Сообщение отправлено!',
-                        description: `${msg}`
-                    }
-                });
-                logger.info(`bot sended callback message to ${user}`)
+                try {
+                    bot.sendMessage({
+                        to: "581451144077770754",
+                        message: `${msg}`,
+                    });
+                    logger.info(user + ` used !r with msg: ${msg}`);
+                    bot.sendMessage({
+                        to: userID,
+                        message: '',
+                        embed: {
+                            color: 0x57CC00,
+                            title: 'Сообщение отправлено!',
+                            description: `> ${msg}`
+                        }
+                    });
+                    logger.info(`bot sended callback message to ${user}`)
+                }
+                catch (error) {
+                    bot.sendMessage({
+                        to: userID,
+                        message: '',
+                        embed: {
+                            color: 0xCC0016,
+                            title: 'Сообщение не было отправлено!',
+                            description: `> ${msg} \n ${error}`
+                        }
+                    });
+                    logger.info(`error on sending message with !r \n ${error}`)
+                }
             }
         }
     }
