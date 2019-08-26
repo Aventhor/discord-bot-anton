@@ -58,7 +58,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
                 break;
             case 'sys':
-                logger.info(user + ' used ga help');
+                logger.info(user + ' used ga sys');
                 var info = getInfo();
                 bot.sendMessage({
                     to: channelID,
@@ -113,7 +113,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     to: "581451144077770754",
                     message: `${msg}`,
                 });
-                console.log(msg)
+                logger.info(user + ` used !r with msg = ${msg}`);
                 bot.sendMessage({
                     to: userID,
                     message: '',
@@ -122,7 +122,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                         title: 'Сообщение отправлено!',
                         description: `${msg}`
                     }
-                })
+                });
+                logger.info(`bot sended callback message to ${user}`)
             }
         }
     }
