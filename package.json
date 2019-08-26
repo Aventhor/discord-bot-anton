@@ -1,0 +1,20 @@
+{
+    "name": "anton",
+    "version": "1.0.0",
+    "description": "Ga Ga Ga",
+    "main": "app.js",
+    "author": "Aventhor",
+    "keywords": [],
+    "license": "ISC",
+    "dependencies": {
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+        "systeminformation": "^4.14.4",
+        "winston": "^3.2.1"
+    },
+    "scripts": {
+        "start": "node app.js"
+    },
+    "engines": {
+        "node": ">= 8.11"
+    }
+}
