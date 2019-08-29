@@ -1,6 +1,8 @@
 var sys = require('./sysinfo')
 var Discord = require('discord.io');
 var logger = require('winston');
+// const { get } = require('snekfetch');
+var goose = require('./commands/gooseMeme');
 
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -54,7 +56,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 logger.info(user + ' used ga help');
                 bot.sendMessage({
                     to: channelID,
-                    message: "Вот список моих команд: `!ga hi`, `!ga time`",
+                    message: "Вот список моих команд: `!ga hi`, `!ga time`, `!ga drop`",
                 });
                 break;
             case 'sys':
@@ -88,6 +90,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     message: "Твои роли на сервере: " + bot.servers["581184926766858240"].members[userID].roles.id,
                 });
                 break;
+            case 'drop':
+                goose.run(bot, user, channelID);
+                break;
             case 'boom':
                 logger.info(user + ' used ga boom');
                 timeId = setInterval(function () {
@@ -106,6 +111,9 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         if (message === '!s') {
             sys.getInfo();
         }
+        // if (message === '!ga drop') {
+        //     goose.run(bot, user, userID);
+        // }
 
         if (message.substring(0, 2) == '!r') {
             var args = message.substring(0).split('!r ');
