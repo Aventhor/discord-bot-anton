@@ -8,6 +8,7 @@ const Statuses = {
 }
 
 let botStatus = Statuses['1'];
+let timer;
 
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -31,10 +32,11 @@ bot.on('ready', function (evt) {
         game: { name: "!ga help", type: 3 },
         status: botStatus
     });
-    let timer = setInterval(() =>
+    timer = setInterval(() =>
         commands.dropMeme(bot, '622528610426683393'),
         3600000
     );
+    logger.info(`auto dropped meme is started`);
 });
 
 bot.on("guildMemberAdd", member => {
@@ -122,6 +124,15 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
         if (message === '!sleep') {
             botStatus = commands.sleep(bot, botStatus, Statuses, 1);
+        }
+
+        if (message === '!stop meme-dropping') {
+            clearInterval(timer);
+            logger.info(`auto meme dropping is stopped`);
+            bot.sendMessage({
+                to: userID,
+                message: `Автопостинг мемов отключен.`
+            });
         }
     }
 });
