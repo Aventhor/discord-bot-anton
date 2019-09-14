@@ -1,7 +1,7 @@
 const { get } = require('snekfetch');
-var logger = require('winston');
+let logger = require('winston');
 
-exports.run = async (bot, user, channelID) => {
+exports.drop = async (bot, user, channelID) => {
     logger.info(user + ` used '!ga get goose'`);
     const { body } = await get('https://www.reddit.com/r/goosememes.json').query({ limit: 800 });
     let meme;

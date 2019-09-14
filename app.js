@@ -1,8 +1,13 @@
-var sys = require('./sysinfo')
-var Discord = require('discord.io');
-var logger = require('winston');
-// const { get } = require('snekfetch');
-var goose = require('./commands/gooseMeme');
+let Discord = require('discord.io');
+let logger = require('winston');
+let commands = require('./commands/index');
+
+const Statuses = {
+    '1': 'online',
+    '2': 'idle'
+}
+
+let botStatus = Statuses['1'];
 
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -10,7 +15,7 @@ logger.add(new logger.transports.Console, {
 });
 
 logger.level = 'debug';
-var bot = new Discord.Client({
+let bot = new Discord.Client({
     token: process.env.TOKEN,
     autorun: true
 });
@@ -22,7 +27,10 @@ bot.on('ready', function (evt) {
     //     to: "581451144077770754",
     //     message: "📣 Гусь Антон на месте! Пляшем вместе!",
     // });
-    bot.setPresence({ game: { name: "!ga help", type: 3 } });
+    bot.setPresence({
+        game: { name: "!ga help", type: 3 },
+        status: botStatus
+    });
 });
 
 bot.on("guildMemberAdd", member => {
@@ -47,8 +55,8 @@ bot.on("guildRoleUpdate", function (oldRole, newRole) {
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
     if (message.substring(0, 3) == '!ga' || message.substring(0, 3) == '-ga') {
-        var args = message.substring(1).split(' ');
-        var cmd = args[1];
+        let args = message.substring(1).split(' ');
+        let cmd = args[1];
 
         args = args.splice(1);
         switch (cmd) {
@@ -61,7 +69,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 break;
             case 'sys':
                 logger.info(user + ' used ga sys');
-                var info = getInfo();
+                let info = getInfo();
                 bot.sendMessage({
                     to: channelID,
                     message: `${info}`,
@@ -70,7 +78,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'time':
                 logger.info(user + ' used ga time');
 
-                var diff = getServerTimeDiff();
+                let diff = getServerTimeDiff();
 
                 bot.sendMessage({
                     to: channelID,
@@ -91,7 +99,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
                 break;
             case 'drop':
-                goose.run(bot, user, channelID);
+                commands.dropMeme(bot, user, channelID);
                 break;
             case 'boom':
                 logger.info(user + ' used ga boom');
@@ -109,56 +117,27 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     }
     if (bot.directMessages[channelID]) {
         if (message === '!s') {
-            sys.getInfo();
+            commands.sys();
         }
-        // if (message === '!ga drop') {
-        //     goose.run(bot, user, userID);
-        // }
 
         if (message.substring(0, 2) == '!r') {
-            var args = message.substring(0).split('!r ');
-            var msg = args[1];
+            let args = message.substring(0).split('!r ');
+            let msg = args[1];
 
             args = args.splice(0, 1);
-            if (cmd != undefined || msg.length !== 0) {
-                try {
-                    bot.sendMessage({
-                        to: "581451144077770754",
-                        message: `${msg}`,
-                    });
-                    logger.info(user + ` used !r with msg: ${msg}`);
-                    bot.sendMessage({
-                        to: userID,
-                        message: '',
-                        embed: {
-                            color: 0x57CC00,
-                            title: 'Сообщение отправлено!',
-                            description: `> ${msg}`
-                        }
-                    });
-                    logger.info(`bot sended callback message to ${user}`)
-                }
-                catch (error) {
-                    bot.sendMessage({
-                        to: userID,
-                        message: '',
-                        embed: {
-                            color: 0xCC0016,
-                            title: 'Сообщение не было отправлено!',
-                            description: `> ${msg} \n ${error}`
-                        }
-                    });
-                    logger.info(`error on sending message with !r \n ${error}`)
-                }
-            }
+            commands.replyMessage(bot, user, userID, '581451144077770754', msg);
+        }
+
+        if (message === '!sleep') {
+            botStatus = commands.sleep(bot, botStatus, Statuses, 1);
         }
     }
 });
 
 function getServerTimeDiff() {
-    var today = new Date();
-    var serverCreated = new Date(2019, 4, 23, 15, 25);
-    var diff = today - serverCreated;
+    let today = new Date();
+    let serverCreated = new Date(2019, 4, 23, 15, 25);
+    let diff = today - serverCreated;
     diff = Math.ceil(diff / (1000 * 3600 * 24));
     return diff;
 }
