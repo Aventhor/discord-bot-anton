@@ -31,6 +31,10 @@ bot.on('ready', function (evt) {
         game: { name: "!ga help", type: 3 },
         status: botStatus
     });
+    let timer = setInterval(() =>
+        commands.dropMeme(bot, '622528610426683393'),
+        3600000
+    );
 });
 
 bot.on("guildMemberAdd", member => {
@@ -99,7 +103,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 });
                 break;
             case 'drop':
-                commands.dropMeme(bot, user, channelID);
+                commands.dropMeme(bot, channelID);
                 break;
             case 'boom':
                 logger.info(user + ' used ga boom');

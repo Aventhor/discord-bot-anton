@@ -7,8 +7,8 @@ exports.sys = () => {
     sys.getInfo();
 }
 
-exports.dropMeme = (bot, user, channelID) => {
-    gooseMeme.drop(bot, user, channelID);
+exports.dropMeme = (bot, channelID) => {
+    gooseMeme.drop(bot, channelID);
 }
 
 exports.replyMessage = (bot, user, userID, channelID, message) => {
