@@ -105,18 +105,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'drop':
                 commands.dropMeme(bot, channelID);
                 break;
-            case 'boom':
-                logger.info(user + ' used ga boom');
-                timeId = setInterval(function () {
-                    bot.sendMessage({
-                        to: channelID,
-                        message: `This is ထ, gg`,
-                    });
-                }, 1000);
-                setTimeout(function () {
-                    clearInterval(timeId);
-                }, 5000);
-                break;
         }
     }
     if (bot.directMessages[channelID]) {
