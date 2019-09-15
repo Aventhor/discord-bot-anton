@@ -24,19 +24,18 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
-    // bot.sendMessage({
-    //     to: "581451144077770754",
-    //     message: "📣 Гусь Антон на месте! Пляшем вместе!",
-    // });
     bot.setPresence({
-        game: { name: "!ga help", type: 3 },
+        game: {
+            name: "!ga help",
+            type: 3,
+        },
         status: botStatus
     });
     timer = setInterval(() =>
         commands.dropMeme(bot, '622528610426683393'),
-        3600000
+        7200000
     );
-    logger.info(`auto dropped meme is started`);
+    logger.info(`auto meme posting is started`);
 });
 
 bot.on("guildMemberAdd", member => {
@@ -60,26 +59,14 @@ bot.on("guildRoleUpdate", function (oldRole, newRole) {
     });
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
-    if (message.substring(0, 3) == '!ga' || message.substring(0, 3) == '-ga') {
+    if (message.substring(0, 3) == '!ga') {
         let args = message.substring(1).split(' ');
         let cmd = args[1];
 
         args = args.splice(1);
         switch (cmd) {
             case 'help':
-                logger.info(user + ' used ga help');
-                bot.sendMessage({
-                    to: channelID,
-                    message: "Вот список моих команд: `!ga hi`, `!ga time`, `!ga drop`",
-                });
-                break;
-            case 'sys':
-                logger.info(user + ' used ga sys');
-                let info = getInfo();
-                bot.sendMessage({
-                    to: channelID,
-                    message: `${info}`,
-                });
+                commands.help(bot, user, channelID);
                 break;
             case 'time':
                 logger.info(user + ' used ga time');
@@ -144,4 +131,5 @@ function getServerTimeDiff() {
     diff = Math.ceil(diff / (1000 * 3600 * 24));
     return diff;
 }
+
 require('http').createServer().listen(3000)
