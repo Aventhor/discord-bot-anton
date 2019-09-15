@@ -15,7 +15,7 @@ module.exports = (bot, timer) =>
         });
         timer = setInterval(() =>
             commands.dropMeme(bot, '622528610426683393'),
-            7200000
+            3600000
         );
         logger.info(`auto meme posting is started`);
     });
