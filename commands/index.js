@@ -1,5 +1,5 @@
 let gooseMeme = require('./gooseMeme');
-let replyMessage = require('./reply-message');
+let replyMessage = require('./replyMessage');
 let botSleep = require('./sleep');
 let sys = require('./sysinfo');
 let help = require('./help');
@@ -16,8 +16,8 @@ exports.replyMessage = (bot, user, userID, channelID, message) => {
     replyMessage.reply(bot, user, userID, channelID, message);
 }
 
-exports.sleep = (bot, status, Statuses, args) => {
-    return botSleep.sleep(bot, status, Statuses, args);
+exports.sleep = (bot, time) => {
+    botSleep.sleep(bot, time);
 }
 
 exports.help = (bot, user, channelID) => {

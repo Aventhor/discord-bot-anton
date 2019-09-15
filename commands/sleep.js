@@ -1,21 +1,20 @@
 let logger = require('winston');
 
-exports.sleep = (bot, status, Statuses, args) => {
-
-    if (status == Statuses[1]) {
+exports.sleep = (bot, time) => {
+    console.log(bot.presenceStatus)
+    if (bot.presenceStatus === 'online') {
         bot.setPresence({
-            status: Statuses['2']
+            status: 'idle'
         });
         logger.info(`bot status changed to idle`);
-        if (args) {
-            args *= 10000;
+        if (time) {
+            time *= 10000;
             setTimeout(
                 () => bot.setPresence({
-                    status: Statuses['1']
+                    status: 'online'
                 }),
-                args
+                time
             )
         }
-        return 'idle';
     }
 }
