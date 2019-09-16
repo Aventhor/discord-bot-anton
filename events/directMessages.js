@@ -20,7 +20,9 @@ module.exports =
                 if (message === '!sleep') {
                     botStatus = commands.sleep(bot, 1);
                 }
-
+                if (message === '!ga') {
+                    commands.dropMeme(bot, userID);
+                }
                 if (message === '!stop meme-dropping') {
                     clearInterval(timer);
                     logger.info(`auto meme posting is stopped`);

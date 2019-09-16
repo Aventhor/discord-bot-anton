@@ -1,8 +1,14 @@
 const { get } = require('snekfetch');
 let logger = require('winston');
+const links = [
+    'https://www.reddit.com/r/geese.json',
+    'https://www.reddit.com/r/goosememes.json'
+]
 
 exports.drop = async (bot, channelID) => {
-    const { body } = await get('https://www.reddit.com/r/goosememes.json').query({ limit: 800 });
+    let randomLink = Math.floor(Math.random() * links.length)
+    console.log(randomLink);
+    const { body } = await get(links[randomLink]).query({ limit: 1000 });
     let meme;
     if (body[0]) {
         meme = body[0].data.children[Math.floor(Math.random() * body[0].data.children.length)].data;
