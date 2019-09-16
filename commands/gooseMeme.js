@@ -7,7 +7,6 @@ const links = [
 
 exports.drop = async (bot, channelID) => {
     let randomLink = Math.floor(Math.random() * links.length)
-    console.log(randomLink);
     const { body } = await get(links[randomLink]).query({ limit: 1000 });
     let meme;
     if (body[0]) {
