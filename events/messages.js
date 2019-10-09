@@ -1,41 +1,30 @@
 let commands = require('../commands/index');
+let logger = require('winston');
 
 module.exports = (bot) =>
-    bot.on('message', function (user, userID, channelID, message, evt) {
-        if (message.substring(0, 3) == '!ga') {
-            let args = message.substring(1).split(' ');
+    bot.on('message', function (message) {
+        if (message.content.substring(0, 3) == '!ga') {
+            let args = message.content.substring(1).split(' ');
             let cmd = args[1];
 
             args = args.splice(1);
             switch (cmd) {
                 case 'help':
-                    commands.help(bot, user, channelID);
+                    commands.help(bot, message);
                     break;
                 case 'time':
-                    logger.info(user + ' used ga time');
+                    logger.info(`${message.author.tag} used !ga time`);
 
                     let diff = getServerTimeDiff();
 
-                    bot.sendMessage({
-                        to: channelID,
-                        message: "С момента создания сервера прошло:  " + diff + " дней",
-                    });
+                    bot.channel.send("С момента создания сервера прошло:  " + diff + " дней");
                     break;
                 case 'hi':
-                    logger.info(user + ' used ga hi');
-                    bot.sendMessage({
-                        to: channelID,
-                        message: "<@!" + userID + ">, рад тебя видеть, мой гагагашечка <:anton:581452820394278917> <:anton:581452820394278917> <:anton:581452820394278917>",
-                    });
-                    break;
-                case 'role':
-                    bot.sendMessage({
-                        to: userID,
-                        message: "Твои роли на сервере: " + bot.servers["581184926766858240"].members[userID].roles.id,
-                    });
+                    logger.info(`${message.author.tag} used !ga hi`);
+                    message.channel.send(`${message.author}, рад тебя видеть, мой гагагашечка <:anton:581452820394278917> <:anton:581452820394278917> <:anton:581452820394278917>`);
                     break;
                 case 'drop':
-                    commands.dropMeme(bot, channelID);
+                    commands.dropMeme(bot, message);
                     break;
             }
         }

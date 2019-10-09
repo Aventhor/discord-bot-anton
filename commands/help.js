@@ -1,8 +1,7 @@
 let logger = require('winston');
 
-exports.help = (bot, user, channelID) => {
-    bot.sendMessage({
-        to: channelID,
+exports.help = (bot, message) => {
+    message.channel.send({
         embed: {
             color: 0x50EBAC,
             title: 'Помощь',
@@ -25,9 +24,9 @@ exports.help = (bot, user, channelID) => {
                 }
             ],
             footer: {
-                text: `С любовью, ${bot.username} ❤️`,
+                text: `С любовью, ${bot.user.username} ❤️`,
             }
         }
     });
-    logger.info(`${user} used help command`);
+    logger.info(`${message.author.tag} used help command`);
 }

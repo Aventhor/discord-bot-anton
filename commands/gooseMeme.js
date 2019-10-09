@@ -1,13 +1,10 @@
+let redditLinks = require('../db.json')
 const { get } = require('snekfetch');
 let logger = require('winston');
-const links = [
-    'https://www.reddit.com/r/geese.json',
-    'https://www.reddit.com/r/goosememes.json'
-]
 
 exports.drop = async (bot, channelID) => {
-    let randomLink = Math.floor(Math.random() * links.length)
-    const { body } = await get(links[randomLink]).query({ limit: 1000 });
+    let randomLink = Math.floor(Math.random() * redditLinks.redditLinks.length)
+    const { body } = await get(redditLinks.redditLinks[randomLink].url).query({ limit: 1000 });
     let meme;
     if (body[0]) {
         meme = body[0].data.children[Math.floor(Math.random() * body[0].data.children.length)].data;
@@ -16,12 +13,11 @@ exports.drop = async (bot, channelID) => {
     }
     logger.info(`fetched data=${meme.url}`);
     if (meme.url != null) {
-        bot.sendMessage({
-            to: channelID,
+        bot.channels.get(channelID).send({
             embed: {
                 color: 0xFF57B1,
                 author: {
-                    name: `${bot.username} dropped the goose`,
+                    name: `${bot.user.username} dropped the goose`,
                     icon_url: 'https://cdn.discordapp.com/app-icons/575742784095518723/87ac88ba0168f4e6a50cd7218fc48556.png'
                 },
                 image: {
@@ -37,10 +33,7 @@ exports.drop = async (bot, channelID) => {
     }
     else {
         logger.info(`error on fetching data: ${meme.url}`)
-        bot.sendMessage({
-            to: channelID,
-            message: `Ой, что-то пошло не так... n\Попробуйте еще раз`
-        });
+        message.author.send(`Ой, что-то пошло не так... n\Попробуйте еще раз`);
     }
 }
 

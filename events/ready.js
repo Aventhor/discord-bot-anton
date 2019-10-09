@@ -2,14 +2,14 @@ let logger = require('winston');
 let commands = require('../commands/index');
 
 module.exports = (bot, timer) =>
-    bot.on('ready', function (evt) {
+    bot.on('ready', () => {
         logger.info('Connected');
         logger.info('Logged in as: ');
-        logger.info(bot.username + ' - (' + bot.id + ')');
-        bot.setPresence({
-            game: {
+        logger.info(bot.user.username + ' - (' + bot.user + ')');
+        bot.user.setPresence({
+            activity: {
                 name: "!ga help",
-                type: 3,
+                type: 2
             },
             status: 'online'
         });

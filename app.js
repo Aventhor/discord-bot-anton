@@ -1,4 +1,4 @@
-let Discord = require('discord.io');
+let Discord = require('discord.js');
 let logger = require('winston');
 
 let timer;
@@ -9,10 +9,8 @@ logger.add(new logger.transports.Console, {
 });
 
 logger.level = 'debug';
-let bot = new Discord.Client({
-    token: process.env.TOKEN,
-    autorun: true
-});
+let bot = new Discord.Client();
+bot.login(process.env.TOKEN);
 
 require('./events/index')(bot, timer);
 

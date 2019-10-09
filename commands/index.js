@@ -12,14 +12,14 @@ exports.dropMeme = (bot, channelID) => {
     gooseMeme.drop(bot, channelID);
 }
 
-exports.replyMessage = (bot, user, userID, channelID, message) => {
-    replyMessage.reply(bot, user, userID, channelID, message);
+exports.replyMessage = (bot, message, channelID, msg) => {
+    replyMessage.reply(bot, message, channelID, msg);
 }
 
 exports.sleep = (bot, time) => {
     botSleep.sleep(bot, time);
 }
 
-exports.help = (bot, user, channelID) => {
-    help.help(bot, user, channelID);
+exports.help = (bot, message) => {
+    help.help(bot, message);
 }
