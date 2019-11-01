@@ -11,6 +11,11 @@ exports.drop = async (bot, channelID) => {
     } else {
         meme = body.data.children[Math.floor(Math.random() * body.data.children.length)].data;
     }
+
+    if (typeof channelID !== 'string') {
+        channelID = channelID.channel.id;
+    }
+
     logger.info(`fetched data=${meme.url}`);
     if (meme.url != null) {
         bot.channels.get(channelID).send({
