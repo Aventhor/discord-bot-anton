@@ -17,7 +17,7 @@ module.exports = (bot) =>
 
                     let diff = getServerTimeDiff();
 
-                    bot.channel.send("С момента создания сервера прошло:  " + diff + " дней");
+                    message.channel.send("С момента создания сервера прошло:  " + diff + " дней");
                     break;
                 case 'hi':
                     logger.info(`${message.author.tag} used !ga hi`);

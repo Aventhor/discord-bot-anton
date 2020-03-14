@@ -4,7 +4,7 @@ exports.reply = (bot, message, channelID, msg) => {
     if (msg != undefined || msg.length !== 0) {
         try {
             logger.info(message.author.tag + ` used !r with msg: ${msg}`);
-            bot.channels.get(channelID).send(`${msg}`);
+            bot.channels.cache.get(channelID).send(`${msg}`);
             message.author.send({
                 embed: {
                     color: 0x57CC00,
@@ -22,7 +22,7 @@ exports.reply = (bot, message, channelID, msg) => {
                     description: `> ${msg} \n ${error}`
                 }
             });
-            logger.info(`error on sending message with !r \n ${error}`)
+            logger.error(`error on sending message with !r \n ${error}`)
         }
     }
 }

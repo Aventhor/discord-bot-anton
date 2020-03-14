@@ -21,7 +21,7 @@ module.exports =
                     botStatus = commands.sleep(bot, 1);
                 }
                 if (message.content === '!drop') {
-                    commands.dropMeme(bot, message);
+                    commands.dropMeme(bot, message.channel.id);
                 }
                 if (message.content === '!stop meme-dropping') {
                     clearInterval(timer);

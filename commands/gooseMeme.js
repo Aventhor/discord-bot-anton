@@ -18,7 +18,7 @@ exports.drop = async (bot, channelID) => {
 
     logger.info(`fetched data=${meme.url}`);
     if (meme.url != null) {
-        bot.channels.get(channelID).send({
+        bot.channels.cache.get(channelID).send({
             embed: {
                 color: 0xFF57B1,
                 author: {
