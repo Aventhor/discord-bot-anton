@@ -1,26 +1,24 @@
 let logger = require('winston');
 
-exports.sleep = (bot, message) => {
+exports.unsleep = (bot, message) => {
     try {
         bot.user.setPresence({
-            status: 'idle'
+            status: 'online'
         });
-        logger.info(`bot status changed to idle`);
+        logger.info(`bot status back to online`);
         message.author.send({
             embed: {
                 color: 0x57CC00,
-                title: 'Окей, я спать...',
-                description: 'Разбуди меня потом командой `!unsleep`'
+                title: 'Утречка, я проснулся!',
             }
         });
     } catch (error) {
         message.author.send({
             embed: {
                 color: 0xCC0016,
-                title: 'Я не могу уснуть!',
+                title: 'Я не могу проснуться!',
                 description: `${error}`
             }
         });
     }
-
 }

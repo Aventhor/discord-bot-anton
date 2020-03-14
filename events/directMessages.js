@@ -18,7 +18,10 @@ module.exports =
                 }
 
                 if (message.content === '!sleep') {
-                    botStatus = commands.sleep(bot, 1);
+                    botStatus = commands.sleep(bot, message);
+                }
+                if (message.content === '!unsleep') {
+                    botStatus = commands.unsleep(bot, message);
                 }
                 if (message.content === '!drop') {
                     commands.dropMeme(bot, message.channel.id);
