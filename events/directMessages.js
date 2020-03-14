@@ -14,15 +14,14 @@ module.exports =
                     let msg = args[1];
 
                     args = args.splice(0, 1);
-                    commands.replyMessage(bot, message, '581451144077770754', msg);
+                    commands.replyMessage(bot, message, process.env.BOTS_CHANNEL_ID, msg);
                 }
 
                 if (message.content === '!sleep') {
                     botStatus = commands.sleep(bot, 1);
                 }
                 if (message.content === '!drop') {
-                    // commands.dropMeme(bot, message, 'f');
-                    message.author.send(`${message.author}`);
+                    commands.dropMeme(bot, message);
                 }
                 if (message.content === '!stop meme-dropping') {
                     clearInterval(timer);
