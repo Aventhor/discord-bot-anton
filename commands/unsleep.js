@@ -1,4 +1,4 @@
-let logger = require('winston');
+let logger = require('../helpers/logger');
 
 exports.unsleep = (bot, message) => {
     try {

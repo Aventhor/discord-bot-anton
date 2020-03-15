@@ -1,5 +1,5 @@
 let commands = require('../commands/index');
-let logger = require('winston');
+let logger = require('../helpers/logger');
 
 module.exports = (bot) =>
     bot.on('message', function (message) {
@@ -26,6 +26,16 @@ module.exports = (bot) =>
                 case 'drop':
                     commands.dropMeme(bot, message);
                     break;
+            }
+
+            if (cmd.substring(0, 4) === 'news') {
+                let args = cmd.substring(0).split('news');
+                let param = args[1];
+
+                if (param === ':random')
+                    commands.dropNews(bot, message, 'random');
+                else if (param === ':latest' || param === '')
+                    commands.dropNews(bot, message, 'latest');
             }
         }
 
