@@ -1,17 +1,21 @@
 const { createLogger, format, transports } = require('winston');
-const { combine, printf } = format;
+const { combine, printf, prettyPrint } = format;
+const app_name = require('../package.json').name
 
 
 const Format = printf(({ level, message }) => {
-    return `[${process.env.npm_package_name}] ${level}: ${message}`;
+    return `[${app_name}] ${level}: ${message}`;
 });
 
 const logger = createLogger({
-    prettyPrint: true,
+    format: combine(
+        prettyPrint(),
+        format.colorize(),
+        format.simple()
+    ),
     transports: [
         new transports.Console({
             format: combine(
-                format.colorize(),
                 Format,
             )
         })
