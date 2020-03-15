@@ -7,11 +7,13 @@ const NEWS_TYPES = {
 }
 
 async function getNews(type) {
-    const response = await get(`http://newsapi.org/v2/top-headlines?country=ru&apiKey=${process.env.NEWS_API_KEY}&pageSize=${type === NEWS_TYPES.LATEST ? 1 : 50}`);
-    if (type === NEWS_TYPES.LATEST)
-        return response.body.articles[0];
+    const response = await get(`http://newsapi.org/v2/top-headlines?country=ru&apiKey=${process.env.NEWS_API_KEY}&pageSize=${type === NEWS_TYPES.LATEST ? 20 : 100}`);
+    const randomPost = Math.floor(Math.random() * response.body.articles.length);
+
+    if (type === NEWS_TYPES.LATEST) {
+        return response.body.articles[randomPost];
+    }
     if (type === NEWS_TYPES.RANDOM) {
-        const randomPost = Math.floor(Math.random() * response.body.articles.length)
         return response.body.articles[randomPost];
     }
 }
