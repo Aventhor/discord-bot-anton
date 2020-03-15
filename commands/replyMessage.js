@@ -1,4 +1,4 @@
-let logger = require('winston');
+let logger = require('../helpers/logger');
 
 exports.reply = (bot, message, channelID, msg) => {
     if (msg != undefined || msg.length !== 0) {

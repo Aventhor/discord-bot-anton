@@ -1,13 +1,8 @@
-let Discord = require('discord.js');
-let logger = require('winston');
+const Discord = require('discord.js');
+const http = require('http');
+const logger = require('./helpers/logger')
 
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-
-logger.level = 'debug';
-let bot = new Discord.Client();
+const bot = new Discord.Client();
 bot.login(process.env.TOKEN);
 
 let memeTimer;
@@ -15,4 +10,4 @@ let newsTimer;
 
 require('./events/index')(bot, memeTimer, newsTimer);
 
-require('http').createServer().listen(3000)
+http.createServer().listen(3000, () => logger.info('Server is started!'))

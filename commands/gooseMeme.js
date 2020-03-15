@@ -1,6 +1,6 @@
 let redditLinks = require('../db.json')
 const { get } = require('snekfetch');
-let logger = require('winston');
+let logger = require('../helpers/logger');
 
 exports.drop = async (bot, channelID) => {
     let randomLink = Math.floor(Math.random() * redditLinks.redditLinks.length)
