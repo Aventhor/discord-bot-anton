@@ -1,5 +1,5 @@
 let commands = require('../commands/index');
-let logger = require('winston');
+let logger = require('../helpers/logger');
 
 module.exports = (bot) =>
     bot.on('message', function (message) {

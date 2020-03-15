@@ -1,5 +1,5 @@
 const { get } = require('snekfetch');
-const logger = require('winston');
+const logger = require('../helpers/logger');
 
 const NEWS_TYPES = {
     LATEST: 'latest',
