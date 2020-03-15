@@ -27,6 +27,16 @@ module.exports = (bot) =>
                     commands.dropMeme(bot, message);
                     break;
             }
+
+            if (cmd.substring(0, 4) === 'news') {
+                let args = cmd.substring(0).split('news');
+                let param = args[1];
+
+                if (param === ':random')
+                    commands.dropNews(bot, message, 'random');
+                else if (param === ':latest' || param === '')
+                    commands.dropNews(bot, message, 'latest');
+            }
         }
 
     });

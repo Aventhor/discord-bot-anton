@@ -21,6 +21,10 @@ exports.help = (bot, message) => {
                 {
                     name: `drop`,
                     value: `Просит Антона дропнуть мем с гусём`
+                },
+                {
+                    name: `news (:latest, :random)`,
+                    value: `Просит Антона пошарить по новостным источникам`
                 }
             ],
             footer: {
