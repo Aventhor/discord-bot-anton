@@ -2,7 +2,7 @@ let commands = require('../commands/index');
 let logger = require('winston');
 
 module.exports =
-    (bot, timer) =>
+    (bot, args) =>
         bot.on('message', function (message) {
             if (message.channel.type == 'dm' && message.content.substring(0, 1) == '!') {
                 let args = message.content.substring(0).split('!');
@@ -41,9 +41,14 @@ module.exports =
                     commands.help(bot, message);
                 }
                 if (msg === 'stop meme-dropping') {
-                    clearInterval(timer);
+                    clearInterval(args[0]);
                     logger.info(`auto meme posting is stopped by ${message.author.tag}`);
                     message.author.send(`Автопостинг мемов отключен.`);
+                }
+                if (msg === 'stop news-posting') {
+                    clearInterval(args[1]);
+                    logger.info(`auto news posting is stopped by ${message.author.tag}`);
+                    message.author.send(`Автопостинг новостей отключен.`);
                 }
             }
         })

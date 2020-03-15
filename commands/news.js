@@ -21,7 +21,7 @@ async function getNews(type) {
  */
 async function sendNews(bot, message, { newsType: type }) {
     const news = await getNews(type);
-    const channelId = message.channel.id;
+    const channelId = typeof message !== 'string' ? message.channel.id : message;
 
     bot.channels.cache.get(channelId).send({
         embed: {
