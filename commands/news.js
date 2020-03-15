@@ -47,7 +47,7 @@ async function sendNews(bot, message, { newsType: type }) {
             },
         }
     });
-    logger.info(`bot sended news post to ${message.channel.recipient.username} with channel id: ${channelId}`)
+    logger.info(`bot sended news post to channel: ${channelId}`)
 }
 
 module.exports.sendNews = sendNews;
