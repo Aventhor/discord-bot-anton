@@ -14,16 +14,12 @@ module.exports = (bot, args) =>
             status: 'online'
         });
         args[0] = setInterval(() =>
-            () => {
-                commands.dropMeme(bot, process.env.MEME_CHANNEL_ID);
-            },
+            commands.dropMeme(bot, process.env.MEME_CHANNEL_ID),
             3600000
         );
         logger.info(`auto meme posting is started`);
         args[1] = setInterval(() =>
-            () => {
-                commands.dropNews(bot, process.env.NEWS_CHANNEL_ID, 'latest');
-            },
+            commands.dropNews(bot, process.env.NEWS_CHANNEL_ID, 'latest'),
             3600000
         );
         logger.info(`auto news posting is started`);
